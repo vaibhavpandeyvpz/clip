@@ -30,7 +30,7 @@ abstract class Command
      *
      * @return string The command name
      */
-    public function name(): string
+    public function getName(): string
     {
         $name = static::class;
         $name = substr($name, strrpos($name, '\\') + 1);
@@ -44,7 +44,7 @@ abstract class Command
      *
      * @return string The command description (empty string by default)
      */
-    public function description(): string
+    public function getDescription(): string
     {
         return '';
     }

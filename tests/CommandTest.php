@@ -19,7 +19,7 @@ class CommandTest extends TestCase
         };
 
         // Anonymous class names are unpredictable, so just verify it returns a string
-        $name = $command->name();
+        $name = $command->getName();
         $this->assertIsString($name);
         $this->assertNotEmpty($name);
     }
@@ -29,7 +29,7 @@ class CommandTest extends TestCase
         // Create a test class to verify name derivation
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 // Simulate a PascalCase class name
                 $name = 'MigrateDB';
@@ -44,14 +44,14 @@ class CommandTest extends TestCase
             }
         };
 
-        $this->assertEquals('migrate-db', $command->name());
+        $this->assertEquals('migrate-db', $command->getName());
     }
 
     public function test_name_derived_from_class_name_with_multiple_words(): void
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 // Simulate a class name with multiple words
                 $name = 'CreateUserCommand';
@@ -66,14 +66,14 @@ class CommandTest extends TestCase
             }
         };
 
-        $this->assertEquals('create-user-command', $command->name());
+        $this->assertEquals('create-user-command', $command->getName());
     }
 
     public function test_name_can_be_overridden(): void
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'custom-name';
             }
@@ -84,7 +84,7 @@ class CommandTest extends TestCase
             }
         };
 
-        $this->assertEquals('custom-name', $command->name());
+        $this->assertEquals('custom-name', $command->getName());
     }
 
     public function test_description_returns_empty_string_by_default(): void
@@ -97,14 +97,14 @@ class CommandTest extends TestCase
             }
         };
 
-        $this->assertEquals('', $command->description());
+        $this->assertEquals('', $command->getDescription());
     }
 
     public function test_description_can_be_overridden(): void
     {
         $command = new class extends Command
         {
-            public function description(): string
+            public function getDescription(): string
             {
                 return 'Test description';
             }
@@ -115,7 +115,7 @@ class CommandTest extends TestCase
             }
         };
 
-        $this->assertEquals('Test description', $command->description());
+        $this->assertEquals('Test description', $command->getDescription());
     }
 
     public function test_execute_is_abstract(): void

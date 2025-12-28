@@ -99,12 +99,12 @@ use Clip\Stdio;
 
 class HelloWorld extends Command
 {
-    public function name(): string
+    public function getName(): string
     {
         return 'hello';
     }
 
-    public function description(): string
+    public function getDescription(): string
     {
         return 'Say hello to the world';
     }
@@ -233,12 +233,12 @@ use Clip\Stdio;
 
 class Migrate extends Command
 {
-    public function name(): string
+    public function getName(): string
     {
         return 'migrate';
     }
 
-    public function description(): string
+    public function getDescription(): string
     {
         return 'Run database migrations';
     }

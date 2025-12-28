@@ -86,8 +86,8 @@ class Console
         }
 
         // Set container if available and command supports it
-        if ($this->container !== null && method_exists($instance, 'container')) {
-            $instance->container($this->container);
+        if ($this->container !== null && method_exists($instance, 'setContainer')) {
+            $instance->setContainer($this->container);
         }
 
         return $instance;
@@ -103,7 +103,7 @@ class Console
     {
         foreach ($this->commands as $command) {
             $instance = $this->resolveCommand($command);
-            if ($instance->name() === $name) {
+            if ($instance->getName() === $name) {
                 return $instance;
             }
         }
@@ -129,8 +129,8 @@ class Console
 
         foreach ($this->commands as $command) {
             $instance = $this->resolveCommand($command);
-            $name = $instance->name();
-            $description = $instance->description();
+            $name = $instance->getName();
+            $description = $instance->getDescription();
             $stdio->writeln("  {$name}\t{$description}");
         }
     }

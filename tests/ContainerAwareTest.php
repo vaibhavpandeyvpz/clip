@@ -24,7 +24,7 @@ class ContainerAwareTest extends TestCase
         };
 
         $container = new Container;
-        $result = $command->container($container);
+        $result = $command->setContainer($container);
 
         $this->assertSame($command, $result);
     }
@@ -47,7 +47,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $command->container($container);
+        $command->setContainer($container);
         $stdio = new Stdio(['script.php', 'test']);
 
         $result = $command->execute($stdio);
@@ -94,7 +94,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $command->container($container);
+        $command->setContainer($container);
         $stdio = new Stdio(['script.php', 'test']);
 
         $result = $command->execute($stdio);
@@ -118,7 +118,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $command->container($container);
+        $command->setContainer($container);
         $stdio = new Stdio(['script.php', 'test']);
 
         $result = $command->execute($stdio);
@@ -167,7 +167,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $command->container($container);
+        $command->setContainer($container);
         $stdio = new Stdio(['script.php', 'test']);
 
         $result = $command->execute($stdio);
@@ -197,7 +197,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $command->container($container);
+        $command->setContainer($container);
         $stdio = new Stdio(['script.php', 'test']);
 
         $result = $command->execute($stdio);

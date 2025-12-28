@@ -20,7 +20,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -51,7 +51,7 @@ class ConsoleTest extends TestCase
         {
             use ContainerAware;
 
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -71,7 +71,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -92,7 +92,7 @@ class ConsoleTest extends TestCase
     {
         $command1 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test1';
             }
@@ -105,7 +105,7 @@ class ConsoleTest extends TestCase
 
         $command2 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test2';
             }
@@ -126,12 +126,12 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
 
-            public function description(): string
+            public function getDescription(): string
             {
                 return 'Test command';
             }
@@ -164,7 +164,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -188,7 +188,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -213,7 +213,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -246,7 +246,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -269,7 +269,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -292,7 +292,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -315,7 +315,7 @@ class ConsoleTest extends TestCase
     {
         $command = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -343,7 +343,7 @@ class ConsoleTest extends TestCase
         {
             use ContainerAware;
 
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -376,7 +376,7 @@ class ConsoleTest extends TestCase
         {
             // Does not use ContainerAware trait
 
-            public function name(): string
+            public function getName(): string
             {
                 return 'test';
             }
@@ -422,7 +422,7 @@ class ConsoleTest extends TestCase
     {
         $command1 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'command1';
             }
@@ -435,7 +435,7 @@ class ConsoleTest extends TestCase
 
         $command2 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'command2';
             }
@@ -458,12 +458,12 @@ class ConsoleTest extends TestCase
     {
         $command1 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'cmd1';
             }
 
-            public function description(): string
+            public function getDescription(): string
             {
                 return 'First command';
             }
@@ -476,12 +476,12 @@ class ConsoleTest extends TestCase
 
         $command2 = new class extends Command
         {
-            public function name(): string
+            public function getName(): string
             {
                 return 'cmd2';
             }
 
-            public function description(): string
+            public function getDescription(): string
             {
                 return 'Second command';
             }

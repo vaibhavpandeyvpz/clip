@@ -33,7 +33,7 @@ trait ContainerAware
      * @param  ContainerInterface  $container  The container instance
      * @return $this
      */
-    public function container(ContainerInterface $container): static
+    public function setContainer(ContainerInterface $container): static
     {
         $this->container = $container;
 
