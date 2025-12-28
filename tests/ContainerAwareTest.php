@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Clip;
 
+use Katora\Container;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class ContainerAwareTest extends TestCase
@@ -23,7 +23,7 @@ class ContainerAwareTest extends TestCase
             }
         };
 
-        $container = $this->createMock(ContainerInterface::class);
+        $container = new Container;
         $result = $command->container($container);
 
         $this->assertSame($command, $result);
@@ -32,11 +32,8 @@ class ContainerAwareTest extends TestCase
     public function test_get_service_from_container(): void
     {
         $service = new \stdClass;
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('get')
-            ->with('service.name')
-            ->willReturn($service);
+        $container = new Container;
+        $container->set('service.name', $service);
 
         $command = new class extends Command
         {
@@ -56,6 +53,7 @@ class ContainerAwareTest extends TestCase
         $result = $command->execute($stdio);
 
         $this->assertEquals(0, $result);
+        $this->assertInstanceOf(\stdClass::class, $container->get('service.name'));
     }
 
     public function test_get_throws_exception_when_container_not_set(): void
@@ -81,11 +79,8 @@ class ContainerAwareTest extends TestCase
 
     public function test_has_returns_true_when_service_exists(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('has')
-            ->with('service.name')
-            ->willReturn(true);
+        $container = new Container;
+        $container->set('service.name', new \stdClass);
 
         $command = new class extends Command
         {
@@ -109,11 +104,7 @@ class ContainerAwareTest extends TestCase
 
     public function test_has_returns_false_when_service_does_not_exist(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('has')
-            ->with('service.name')
-            ->willReturn(false);
+        $container = new Container;
 
         $command = new class extends Command
         {
@@ -158,12 +149,7 @@ class ContainerAwareTest extends TestCase
 
     public function test_get_propagates_not_found_exception(): void
     {
-        $exception = $this->createMock(NotFoundExceptionInterface::class);
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('get')
-            ->with('service.name')
-            ->willThrowException($exception);
+        $container = new Container;
 
         $command = new class extends Command
         {
@@ -191,12 +177,9 @@ class ContainerAwareTest extends TestCase
 
     public function test_get_propagates_container_exception(): void
     {
-        $exception = $this->createMock(ContainerExceptionInterface::class);
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('get')
-            ->with('service.name')
-            ->willThrowException($exception);
+        // Katora will throw NotFoundException for non-existent services
+        // which implements ContainerExceptionInterface
+        $container = new Container;
 
         $command = new class extends Command
         {

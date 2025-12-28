@@ -134,8 +134,6 @@ class CommandTest extends TestCase
         {
             public function execute(Stdio $stdio): int
             {
-                $this->assertInstanceOf(Stdio::class, $stdio);
-
                 return 0;
             }
         };
@@ -144,6 +142,7 @@ class CommandTest extends TestCase
         $result = $command->execute($stdio);
 
         $this->assertEquals(0, $result);
+        $this->assertInstanceOf(Stdio::class, $stdio);
     }
 
     public function test_execute_can_return_non_zero(): void

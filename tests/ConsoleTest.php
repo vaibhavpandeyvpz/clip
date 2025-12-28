@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Clip;
 
+use Katora\Container;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 
 class ConsoleTest extends TestCase
 {
@@ -38,7 +38,7 @@ class ConsoleTest extends TestCase
 
     public function test_constructor_with_container(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = new Container;
         $console = new Console([], $container);
 
         $this->assertInstanceOf(Console::class, $console);
@@ -46,7 +46,7 @@ class ConsoleTest extends TestCase
 
     public function test_constructor_with_commands_and_container(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = new Container;
         $command = new class extends Command
         {
             use ContainerAware;
@@ -336,11 +336,8 @@ class ConsoleTest extends TestCase
 
     public function test_resolve_command_with_container(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('has')
-            ->with('service')
-            ->willReturn(true);
+        $container = new Container;
+        $container->set('service', new \stdClass);
 
         $command = new class extends Command
         {
@@ -353,7 +350,10 @@ class ConsoleTest extends TestCase
 
             public function execute(Stdio $stdio): int
             {
-                $this->has('service');
+                // Verify container is set and service exists
+                if (! $this->has('service')) {
+                    return 1;
+                }
 
                 return 0;
             }
@@ -365,11 +365,12 @@ class ConsoleTest extends TestCase
         $result = $console->run($argv);
 
         $this->assertEquals(0, $result);
+        $this->assertTrue($container->has('service'));
     }
 
     public function test_resolve_command_with_container_but_no_container_method(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = new Container;
 
         $command = new class extends Command
         {

@@ -24,7 +24,7 @@ class Stdio
     /**
      * The command name.
      */
-    protected string $command;
+    protected string $command = '';
 
     /**
      * Array of command arguments.

@@ -498,12 +498,12 @@ class StdioTest extends TestCase
     {
         putenv('NO_COLOR=1');
 
-        $output = fopen('php://memory', 'r+');
-        $stdio = new Stdio(['script.php', 'test'], $output);
+        $stderr = fopen('php://memory', 'r+');
+        $stdio = new Stdio(['script.php', 'test'], null, $stderr);
 
         $stdio->error('Error');
-        rewind($output);
-        $content = stream_get_contents($output);
+        rewind($stderr);
+        $content = stream_get_contents($stderr);
 
         // Should not contain ANSI color codes
         $this->assertStringNotContainsString("\033[", $content);
@@ -515,14 +515,14 @@ class StdioTest extends TestCase
     public function test_colors_enabled_when_supported(): void
     {
         // Create a mock stream that appears to support colors
-        $output = fopen('php://memory', 'r+');
-        $stdio = new Stdio(['script.php', 'test'], $output);
+        $stderr = fopen('php://memory', 'r+');
+        $stdio = new Stdio(['script.php', 'test'], null, $stderr);
 
         // We can't easily test color support detection without mocking,
         // but we can test that colorize works when enabled
         $stdio->error('Error');
-        rewind($output);
-        $content = stream_get_contents($output);
+        rewind($stderr);
+        $content = stream_get_contents($stderr);
 
         // Just verify it contains the message
         $this->assertStringContainsString('Error', $content);
