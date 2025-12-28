@@ -1,0 +1,17 @@
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <coverage>
+        <report>
+            <clover outputFile="coverage.xml" />
+        </report>
+    </coverage>
+    <testsuites>
+        <testsuite name="vaibhavpandeyvpz/clip">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
