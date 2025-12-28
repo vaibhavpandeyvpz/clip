@@ -120,12 +120,12 @@ class CommandTest extends TestCase
 
     public function test_execute_is_abstract(): void
     {
-        $this->expectException(\Error::class);
+        // Verify that Command is abstract and execute() is an abstract method
+        $reflection = new \ReflectionClass(Command::class);
+        $this->assertTrue($reflection->isAbstract());
 
-        new class extends Command
-        {
-            // Missing execute() implementation
-        };
+        $executeMethod = $reflection->getMethod('execute');
+        $this->assertTrue($executeMethod->isAbstract());
     }
 
     public function test_execute_receives_stdio(): void
