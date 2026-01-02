@@ -15,7 +15,6 @@
 - 🎨 **Colored output** - Built-in support for colored console output
 - 💬 **Interactive input** - Ask questions, confirmations, and choices
 - 🔧 **Flexible** - Easy to extend and customize
-- 🪣 **PSR-11 support** - Optional container integration for dependency injection
 
 ## Installation
 
@@ -39,51 +38,6 @@ $app = new Console([
 
 exit($app->run());
 ```
-
-## Dependency Injection (PSR-11)
-
-Clip supports optional PSR-11 container integration for dependency injection:
-
-```php
-<?php
-
-use Clip\Console;
-use Psr\Container\ContainerInterface;
-
-// Pass your PSR-11 container to Console
-$app = new Console([
-    MyCommand::class,
-], $container);
-```
-
-Inside your commands, you can access services from the container:
-
-```php
-<?php
-
-namespace Clip\Commands;
-
-use Clip\Command;
-use Clip\Stdio;
-
-class MyCommand extends Command
-{
-    public function execute(Stdio $stdio): int
-    {
-        // Get a service from the container
-        $service = $this->get('service.name');
-
-        // Check if a service exists
-        if ($this->has('another.service')) {
-            $another = $this->get('another.service');
-        }
-
-        return 0;
-    }
-}
-```
-
-**Note:** The container is optional. If you don't pass one, the `get()` and `has()` methods will throw exceptions or return false respectively.
 
 ## Creating Commands
 

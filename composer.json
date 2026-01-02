@@ -29,12 +29,8 @@
   "require": {
     "php": "^8.2"
   },
-  "suggest": {
-    "psr/container": "Required for PSR-11 container support"
-  },
   "require-dev": {
-    "phpunit/phpunit": "^10.0",
-    "vaibhavpandeyvpz/katora": "^2.0"
+    "phpunit/phpunit": "^10.0"
   },
   "type": "library"
 }

@@ -20,8 +20,6 @@ namespace Clip;
  */
 abstract class Command
 {
-    use ContainerAware;
-
     /**
      * Returns the name of the command.
      *

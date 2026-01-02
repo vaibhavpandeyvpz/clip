@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Clip;
 
-use Psr\Container\ContainerInterface;
-
 /**
  * Main console application class for managing and running console commands.
  *
@@ -31,20 +29,12 @@ class Console
     protected array $commands = [];
 
     /**
-     * PSR-11 container instance.
-     */
-    protected ?ContainerInterface $container = null;
-
-    /**
      * Creates a new Console instance.
      *
      * @param  array<string|Command>  $commands  Array of command class names or instances
-     * @param  ContainerInterface|null  $container  Optional PSR-11 container for dependency injection
      */
-    public function __construct(array $commands = [], ?ContainerInterface $container = null)
+    public function __construct(array $commands = [])
     {
-        $this->container = $container;
-
         foreach ($commands as $command) {
             $this->command($command);
         }
@@ -83,11 +73,6 @@ class Console
             if (! $instance instanceof Command) {
                 throw new \RuntimeException("Command class '{$command}' must extend Command.");
             }
-        }
-
-        // Set container if available and command supports it
-        if ($this->container !== null && method_exists($instance, 'setContainer')) {
-            $instance->setContainer($this->container);
         }
 
         return $instance;

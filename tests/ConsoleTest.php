@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Clip;
 
-use Katora\Container;
 use PHPUnit\Framework\TestCase;
 
 class ConsoleTest extends TestCase
@@ -32,37 +31,6 @@ class ConsoleTest extends TestCase
         };
 
         $console = new Console([$command::class]);
-
-        $this->assertInstanceOf(Console::class, $console);
-    }
-
-    public function test_constructor_with_container(): void
-    {
-        $container = new Container;
-        $console = new Console([], $container);
-
-        $this->assertInstanceOf(Console::class, $console);
-    }
-
-    public function test_constructor_with_commands_and_container(): void
-    {
-        $container = new Container;
-        $command = new class extends Command
-        {
-            use ContainerAware;
-
-            public function getName(): string
-            {
-                return 'test';
-            }
-
-            public function execute(Stdio $stdio): int
-            {
-                return 0;
-            }
-        };
-
-        $console = new Console([$command::class], $container);
 
         $this->assertInstanceOf(Console::class, $console);
     }
@@ -329,68 +297,6 @@ class ConsoleTest extends TestCase
         $console = new Console([$command]);
         $argv = ['script.php', 'test'];
 
-        $result = $console->run($argv);
-
-        $this->assertEquals(0, $result);
-    }
-
-    public function test_resolve_command_with_container(): void
-    {
-        $container = new Container;
-        $container->set('service', new \stdClass);
-
-        $command = new class extends Command
-        {
-            use ContainerAware;
-
-            public function getName(): string
-            {
-                return 'test';
-            }
-
-            public function execute(Stdio $stdio): int
-            {
-                // Verify container is set and service exists
-                if (! $this->has('service')) {
-                    return 1;
-                }
-
-                return 0;
-            }
-        };
-
-        $console = new Console([$command::class], $container);
-        $argv = ['script.php', 'test'];
-
-        $result = $console->run($argv);
-
-        $this->assertEquals(0, $result);
-        $this->assertTrue($container->has('service'));
-    }
-
-    public function test_resolve_command_with_container_but_no_container_method(): void
-    {
-        $container = new Container;
-
-        $command = new class extends Command
-        {
-            // Does not use ContainerAware trait
-
-            public function getName(): string
-            {
-                return 'test';
-            }
-
-            public function execute(Stdio $stdio): int
-            {
-                return 0;
-            }
-        };
-
-        $console = new Console([$command::class], $container);
-        $argv = ['script.php', 'test'];
-
-        // Should not throw, container method doesn't exist so it's skipped
         $result = $console->run($argv);
 
         $this->assertEquals(0, $result);
